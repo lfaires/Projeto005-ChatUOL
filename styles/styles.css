@@ -18,6 +18,18 @@ header {
 
 .container {
     background:#F3F3F3;
+    margin-top: 106px;
+}
+
+.chat {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100vw;
+    height: 25px;
+    background: #FFDEDE;
+    font-size: 14px;
+    margin-bottom: 4px;
+    border-radius: 2px;
 }
 
 footer {
@@ -35,6 +47,8 @@ footer {
 
 input {
     border: none;
+    font-size: 18px;
+    font-weight: 400;
 }
 
 ion-icon {
