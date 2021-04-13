@@ -14,7 +14,6 @@ body {
     width: 100vw;
     height: 1000px;
     z-index: 2;
-    display: none;
 }
 
 .initial-screen img {
@@ -32,12 +31,55 @@ body {
     margin-bottom: 15px;
 }
 
-button {
+.active-screen {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    width: 74vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    background: #FFF;
+    z-index: 3;
+}
+
+.active-screen-back {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background: rgba(0,0,0,0.6);
+    z-index: 2;
+}
+
+
+.heading {
+    text-align: center;
+    font-weight: 700;
+    padding: 20px;
+} 
+
+.chat-visibility {
+    display: flex;
+    flex-direction: column;
+}
+
+#login {
     background: #E7E7E7;
     width: 109px;
     height: 45px;
     border: none;
     border-radius: 9px;
+}
+
+.hide {
+    display: none;
+}
+
+.unhide {
+    display: block;
 }
 
 header {
