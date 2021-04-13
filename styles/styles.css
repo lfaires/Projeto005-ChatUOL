@@ -87,6 +87,7 @@ header {
     justify-content: space-between;
     align-items: center;
     position: fixed;
+    background: #FFF;
     z-index: 1;
     top: 0px;
     left: 0px;
@@ -100,6 +101,7 @@ header {
     background:#F3F3F3;
     height: 100%;
     margin-top: 106px;
+    margin-bottom: 90px;
 }
 
 .chat {
@@ -118,6 +120,7 @@ footer {
     justify-content: space-between;
     align-items: center;
     position: fixed;
+    background: #FFF;
     z-index: 1;
     bottom: 0px;
     left: 0px;
