@@ -3,11 +3,49 @@ body {
     font-family: roboto;
 }
 
+.initial-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #FFFFFF;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 1000px;
+    z-index: 2;
+    display: none;
+}
+
+.initial-screen img {
+    width: 130px;
+    height: 92px;
+    margin: 72px 122px 94px 122px;
+}
+
+.initial-screen input {
+    text-align: center;
+    border-radius: 4px;
+    width: 261px;
+    height: 54px;
+    border: 1px solid #D7D7D7;
+    margin-bottom: 15px;
+}
+
+button {
+    background: #E7E7E7;
+    width: 109px;
+    height: 45px;
+    border: none;
+    border-radius: 9px;
+}
+
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: fixed;
+    z-index: 1;
     top: 0px;
     left: 0px;
     width: 100vw;
@@ -18,6 +56,7 @@ header {
 
 .container {
     background:#F3F3F3;
+    height: 100%;
     margin-top: 106px;
 }
 
@@ -37,6 +76,7 @@ footer {
     justify-content: space-between;
     align-items: center;
     position: fixed;
+    z-index: 1;
     bottom: 0px;
     left: 0px;
     width: 100vw;
@@ -54,3 +94,4 @@ input {
 ion-icon {
     font-size: 35px;
 }
+
