@@ -16,11 +16,13 @@ function loggingChat() {
    
     requestName.then(successLogging)
     requestName.catch(errorLogging)
+    
 }
 
 function successLogging(success){
-    const intialScreen = document.querySelector(".initial-screen")
+    const initialScreen = document.querySelector(".initial-screen")
     initialScreen.classList.add("hide")  
+    searchMessages()
 }
 
 function errorLogging(errors){
@@ -38,6 +40,40 @@ function errorLogging(errors){
     sdjk.innerHTML = `<img src="https://http.cat/${errorNumber}.jpg" alt=""></img>`*/
 }
 
+/*function checkConnection(name){
+    const connection = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/status",name)
+
+    connection.then()
+    connection.catch()
+}*/
+
+
+function searchMessages(){
+    const promiseMessages = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages")
+
+    promiseMessages.then(successMessages)
+    promiseMessages.catch(errorMessages)
+}
+
+function successMessages(promiseResponse){
+    const messages = promiseResponse.data;
+    const container = document.querySelector(".container")
+    container.innerHTML = ""
+
+    for(let i=0;i<messages.length;i++){
+        if(messages[i].text === "entra na sala..."){
+            container.innerHTML += `<li class="chat"> ${messages[i].time} ${messages[i].from} ${messages[i].text}</li>`
+        }else {
+            container.innerHTML += `<li class="chat">${messages[i].time} ${messages[i].from} para ${messages[i].to}: ${messages[i].text}</li>`
+        }
+    }
+}
+
+function errorMessages(){
+    alert("ERRO")
+}
+
+
 
 function activeScreen(){
     const activeParticipants = document.querySelector(".active-screen")
@@ -53,7 +89,7 @@ function closeActiveScreen(){
     activeScreenBack.classList.remove("unhide")
 }
 
-function sendMessage(){
+/*function sendMessage(){
     const nameInput = document.querySelector(".name")
     const messageInput = document.querySelector(".message")
     const name = nameInput.value
@@ -73,4 +109,4 @@ function addMessageScreen(text){
     container.innerHTML += li
     document.querySelector(".message").value = ""
     }
-}
+}*/
