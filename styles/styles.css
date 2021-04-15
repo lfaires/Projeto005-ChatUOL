@@ -54,6 +54,11 @@ body {
     z-index: 2;
 }
 
+.active-check {
+    color: #28BB25;
+    font-size: 20px;
+    font-weight: bold;
+}
 
 .heading {
     text-align: center;
@@ -66,12 +71,13 @@ body {
     flex-direction: column;
 }
 
-#login {
+#submit {
     background: #E7E7E7;
     width: 109px;
     height: 45px;
     border: none;
     border-radius: 9px;
+    font-size: 18px;
 }
 
 .hide {
@@ -130,7 +136,7 @@ footer {
     box-shadow: 0px -5px 10px #F3F3F3;
 }
 
-input {
+.input {
     border: none;
     font-size: 18px;
     font-weight: 400;

@@ -23,27 +23,31 @@
         <input class="message" type="text" placeholder="Escreva aqui">
         <ion-icon name="paper-plane-outline" onclick="sendMessage()"></ion-icon>
     </footer>
-    
-    <div class="initial-screen hide">
+
+    <div class="initial-screen">
         <img src="img/logo_uol2.png" alt="Logo UOL">
         <input class="name" type="text" placeholder="Digite seu nome">
-        <input id="login" type="submit" value="Entrar">
+        <button id="submit" onclick="loggingChat()">Entrar</button>
+        <div class="error"></div>
     </div>
-    <div class="active-screen-back hide"></div>
+    <div class="active-screen-back hide" onclick="closeActiveScreen()"></div>
     <div class="active-screen hide">
        
-        <div class="heading">Escolha um contato <br> para enviar mensagem:</div>
+        <div class="heading contact">Escolha um contato <br> para enviar mensagem:</div>
         <div>
             <p>Todos</p>
             <p>João</p>
             <p>Maria</p>
         </div>
-        <div class="heading">Escolha a visibilidade:</div>
-        <div>
-            <div><ion-icon name="lock-open"></ion-icon><span>Público</span></div>
-            <div><ion-icon name="lock-closed"></ion-icon> <span>Reservadamente</span></div>            
+        <div class="heading visibility">Escolha a visibilidade:</div>
+        <div id="public" onclick="chooseVisibility(this)">
+            <div><ion-icon name="lock-open"></ion-icon><span>Público</span></div>           
+        </div>
+        <div id="private" onclick="chooseVisibility(this)">
+            <div><ion-icon name="lock-closed"></ion-icon><span>Reservadamente</span></div>            
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script/script.js"></script>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 </body>
