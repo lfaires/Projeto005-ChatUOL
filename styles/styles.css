@@ -112,13 +112,28 @@ header {
 
 .chat {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
     width: 100vw;
-    height: 25px;
-    background: #FFDEDE;
+    height: 40px;
+    background: #FFFFFF;
     font-size: 14px;
-    margin-bottom: 4px;
+    margin-top: 4px;
+    padding-left: 8px;
+    padding-right: 9px;
     border-radius: 2px;
+}
+
+.status {
+    background:#DCDCDC;
+}
+
+.private {
+    background:#FFDEDE;
+}
+
+.time {
+    color: #AAAAAA;
 }
 
 footer {
@@ -136,7 +151,7 @@ footer {
     box-shadow: 0px -5px 10px #F3F3F3;
 }
 
-.input {
+input {
     border: none;
     font-size: 18px;
     font-weight: 400;

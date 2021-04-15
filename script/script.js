@@ -1,6 +1,8 @@
-const sentMessages = [];
+const messageSent = [];
 let names = [];
 
+
+/* Entra na sala */
 function loggingChat() {
     const nameInput = document.querySelector(".name").value
    
@@ -17,12 +19,13 @@ function loggingChat() {
     requestName.then(successLogging)
     requestName.catch(errorLogging)
     
+    return nameInput;
 }
 
 function successLogging(success){
     const initialScreen = document.querySelector(".initial-screen")
     initialScreen.classList.add("hide")  
-    searchMessages()
+    searchingMessages()
 }
 
 function errorLogging(errors){
@@ -40,6 +43,9 @@ function errorLogging(errors){
     sdjk.innerHTML = `<img src="https://http.cat/${errorNumber}.jpg" alt=""></img>`*/
 }
 
+/*----------------------------------------------------------------*/
+
+/*checka conexão*/
 /*function checkConnection(name){
     const connection = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/status",name)
 
@@ -47,34 +53,36 @@ function errorLogging(errors){
     connection.catch()
 }*/
 
-
-function searchMessages(){
+/* busca mensagens*/
+function searchingMessages(){
     const promiseMessages = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages")
 
-    promiseMessages.then(successMessages)
-    promiseMessages.catch(errorMessages)
+    promiseMessages.then(successSearchingMessages)
+    promiseMessages.catch(errorSearchingMessages)
 }
 
-function successMessages(promiseResponse){
+function successSearchingMessages(promiseResponse){
     const messages = promiseResponse.data;
     const container = document.querySelector(".container")
     container.innerHTML = ""
 
     for(let i=0;i<messages.length;i++){
-        if(messages[i].text === "entra na sala..."){
-            container.innerHTML += `<li class="chat"> ${messages[i].time} ${messages[i].from} ${messages[i].text}</li>`
-        }else {
-            container.innerHTML += `<li class="chat">${messages[i].time} ${messages[i].from} para ${messages[i].to}: ${messages[i].text}</li>`
+        if(messages[i].type === "status"){
+            container.innerHTML += `<li class="chat status"><span class="time">(${messages[i].time})&nbsp;</span> <strong>${messages[i].from}&nbsp;</strong> ${messages[i].text}</li>`
+        }else if (messages[i].type === "private_message") {
+            container.innerHTML += `<li class="chat private"><span class="time">(${messages[i].time})&nbsp;</span> <strong>${messages[i].from}&nbsp;</strong> reservadamente para <strong>&nbsp;${messages[i].to}</strong>: ${messages[i].text}</li>`
+        } else {
+            container.innerHTML += `<li class="chat"><span class="time">(${messages[i].time})&nbsp;</span> <strong>${messages[i].from}&nbsp;</strong> para <strong>&nbsp;${messages[i].to}</strong>: ${messages[i].text}</li>`
         }
     }
 }
 
-function errorMessages(){
-    alert("ERRO")
+function errorSearchingMessages(promiseResponse){
+    alert(promiseResponse.response.status)
 }
 
 
-
+/* contatos ativos*/
 function activeScreen(){
     const activeParticipants = document.querySelector(".active-screen")
     const activeScreenBack = document.querySelector(".active-screen-back")
@@ -89,24 +97,40 @@ function closeActiveScreen(){
     activeScreenBack.classList.remove("unhide")
 }
 
-/*function sendMessage(){
-    const nameInput = document.querySelector(".name")
-    const messageInput = document.querySelector(".message")
-    const name = nameInput.value
-    const message = messageInput.value
+/*enviar mensagem*/
+
+function sendingMessages(name){
+    const messageInput = document.querySelector(".message").value;
+   
+    const messageSent = {from: name, to:"Todos", text: messageInput, type: "message"};
     
-    sentMessages.push({name: name, message: message})
-      
-    addMessageScreen(message)
+    console.log(messageSent)
+
+    const requestMessage = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages", messageSent);
+  
+    requestMessage.then(successSendingMesssages)
+    requestMessage.catch(errorSendingMessages)
 }   
+
+function successSendingMesssages(success){
+    console.log(success.response.status)
+    searchingMessages()
+}
+
+function errorSendingMessages(error){
+    console.log(error.response.status)
+    alert(error.response.status)
+    searchingMessages()
+}
+
 
 function addMessageScreen(text){
     const container = document.querySelector(".container")
     container.innerHTML = ""
 
-    for (i=0;i<sentMessages.length;i++){
-    const li = `<li class="chat">${sentMessages[i].message}</li>`
+    for (i=0;i<messageSent.length;i++){
+    const li = `<li class="chat">${messageSent[i].message}</li>`
     container.innerHTML += li
     document.querySelector(".message").value = ""
     }
-}*/
+}
