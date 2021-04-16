@@ -1,7 +1,7 @@
 const messageSent = [];
 let names = [];
 const nameInput = document.querySelector(".name").value
-
+const loading = document.querySelector(".loading")
 
 /* Entra na sala */
 function loggingChat() {
@@ -11,10 +11,9 @@ function loggingChat() {
         return;   
     }
 
-    const loading = document.querySelector(".loading")
     loading.innerHTML = `<img src="img/loading.gif" alt=""><span>Carregando...</span>`
     
-   confirmingUser()
+    confirmingUser()
 }
 
 function confirmingUser(){
@@ -29,8 +28,10 @@ function confirmingUser(){
 
 function successLogging(success){
     const initialScreen = document.querySelector(".initial-screen")
-    initialScreen.classList.add("hide")  
-    searchingMessages()
+    initialScreen.classList.add("hide")
+    loading.innerHTML = ""
+    getMessages()  
+    setInterval(getMessages,3000)
     setInterval(checkConnection,5000)
 }
 
@@ -47,16 +48,16 @@ function errorLogging(errors){
     }
 }
 
-/* busca mensagens*/
-function searchingMessages(){
+/* BUSCAR MENSAGENS*/
+function getMessages(){
     const promiseMessages = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages")
 
-    promiseMessages.then(successSearchingMessages)
-    promiseMessages.catch(errorSearchingMessages)
+    promiseMessages.then(successGetMessages)
+    promiseMessages.catch(errorGetMessages)
 }
 
-function successSearchingMessages(promiseResponse){
-    const messages = promiseResponse.data;
+function successGetMessages(success){
+    const messages = success.data;
     const container = document.querySelector(".container")
     container.innerHTML = ""
 
@@ -64,16 +65,19 @@ function successSearchingMessages(promiseResponse){
         if(messages[i].type === "status"){
             container.innerHTML += `<li class="chat status"><span class="time">(${messages[i].time})&nbsp;</span> <strong>${messages[i].from}&nbsp;</strong> ${messages[i].text}</li>`
         }else if (messages[i].type === "private_message") {
-            container.innerHTML += `<li class="chat private"><span class="time">(${messages[i].time})&nbsp;</span> <strong>${messages[i].from}&nbsp;</strong> reservadamente para <strong>&nbsp;${messages[i].to}:&nbsp;</strong> ${messages[i].text}</li>`
+            if(messages[i].to === nameInput){
+            container.innerHTML += `<li class="chat private"><span class="time">(${messages[i].time})&nbsp;</span> <strong>${messages[i].from}&nbsp;</strong> reservadamente para <strong>&nbsp;${messages[i].to}:&nbsp;</strong> ${messages[i].text}</li>`}
         } else {
             container.innerHTML += `<li class="chat"><span class="time">(${messages[i].time})&nbsp;</span> <strong>${messages[i].from}&nbsp;</strong> para <strong>&nbsp;${messages[i].to}:&nbsp;</strong> ${messages[i].text}</li>`
         }
     }
     automaticScrollDown(container)
+    console.log("pegando msg a cada 3s trank")
 }
 
-function errorSearchingMessages(promiseResponse){
-    alert(promiseResponse.response.status)
+function errorGetMessages(error){
+    alert(error.response.status)
+    console.log("deu ruim pegando msg a cada 3s trank")
 }
 
 
@@ -93,9 +97,9 @@ function closeActiveScreen(){
     activeScreenBack.classList.remove("unhide")
 }
 
-/*enviar mensagem*/
+/*ENVIAR MENSAGEM*/
 
-function sendingMessages(){
+function sendMessages(){
     const messageInput = document.querySelector(".message").value;
     const messageSent = {from: nameInput, to: "Todos", text: messageInput, type: "message"};
     
@@ -103,17 +107,17 @@ function sendingMessages(){
 
     const requestMessage = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages", messageSent);
   
-    requestMessage.then(successSendingMesssages)
-    requestMessage.catch(errorSendingMessages)
+    requestMessage.then(successSendMesssages)
+    requestMessage.catch(errorSendMessages)
 }   
 
-function successSendingMesssages(success){
-    searchingMessages()
+function successSendMesssages(success){
+    getMessages()
     console.log(success)
     
 }
 
-function errorSendingMessages(error){
+function errorSendMessages(error){
     location.reload()
 }
 
@@ -134,11 +138,6 @@ function automaticScrollDown(element){
     console.log(scrollContainer)
     scrollContainer.scrollIntoView()
 
-}
-
-function enterKeyEnable(){
-    const textInput = document.querySelector(".message")
-    textInput.addEventListener()
 }
 
 function messageToUser(){
@@ -175,7 +174,7 @@ function errorMessageToUser(){
 }
 
 
-function chooseUser(user){
+/*function chooseUser(user){
     const userName = user;
     console.log(userName)
     const check = document.querySelector("." + userName + ".check")
@@ -186,7 +185,7 @@ function chooseUser(user){
     } 
 
     check.classList.add("active")
-}
+}*/
 
 
 /* MANTER CONEXÃO*/
@@ -205,4 +204,7 @@ function successCheck(response){
 function errorCheck(response){
     location.load()
     nameInput = ""
+    console.log(nameInput)
+    console.log("deu ruim checkando conexao")
 }
+

@@ -171,7 +171,9 @@ input {
 
 .message::placeholder {
     font-style: italic;
-    color: #000;
+    font-family: roboto;
+    color: #000000;
+  
 
 }
 
