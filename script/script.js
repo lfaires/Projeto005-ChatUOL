@@ -39,16 +39,15 @@ function successLogging(success){
 
 function errorLogging(errors){
     loading.innerHTML = ""
-    nameInput = ""
     if(errors === ""){
-        window.location.reload()
+        updateScreen()
         alert("Por favor, insira um nome!")
         return;
     }
     
     const errorNumber = errors.response.status;
     if(errorNumber === 400){
-        window.location.reload()
+        updateScreen()
         alert("Por favor, insira outro nome!")
         return;
     }
@@ -79,14 +78,13 @@ function successGetMessages(success){
         }
     }
     automaticScrollDown(container)
-    console.log("pegando msg a cada 3s trank")
 }
 
 function errorGetMessages(error){
-    alert(error.response.status)
-    console.log("deu ruim pegando msg a cada 3s trank")
-}
+    updateScreen()
 
+}
+/*------------------------------------------*/
 /* contatos ativos*/
 function activeScreen(){
     const activeParticipants = document.querySelector(".active-screen")
@@ -104,13 +102,12 @@ function closeActiveScreen(){
     activeScreenBack.classList.remove("unhide")
 }
 
+/*------------------------------------------*/
 /*ENVIAR MENSAGEM*/
 function sendMessages(){
     const messageInput = document.querySelector(".message").value;
     const messageSent = {from: nameInput, to: nameTo, text: messageInput, type: messageStatus};
     
-    console.log(messageSent)
-
     const requestMessage = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages", messageSent);
   
     requestMessage.then(successSendMesssages)
@@ -122,15 +119,15 @@ function successSendMesssages(success){
 }
 
 function errorSendMessages(error){
-    widnow.location.reload()
+    updateScreen()
 }
-
+/*------------------------------------------*/
 function automaticScrollDown(element){
     const scrollContainer = element.lastChild;
-    console.log(scrollContainer)
     scrollContainer.scrollIntoView()
 }
 
+/*------------------------------------------*/
 function messageToUser(){
     const promiseUserActive = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants")
   
@@ -140,10 +137,9 @@ function messageToUser(){
 
 function successMessageToUser(promiseResponse){
     const user = promiseResponse.data
-    console.log(user)
     const sideBar = document.querySelector(".users")
     const validationSideBar = document.querySelector(".check.user-todos.active")
-    console.log(validationSideBar)
+
     if(validationSideBar === null){
        sideBar.innerHTML =
         `<div class="activate-users" onclick="chooseUser('user-todos')">
@@ -199,8 +195,10 @@ function successMessageToUser(promiseResponse){
     }
 
 function errorMessageToUser(){
-    window.location.reload()
+    updateScreen()
 }
+
+/*------------------------------------------*/
 
 function chooseUser(user){
     const check = document.querySelector(".check." + user)
@@ -223,15 +221,10 @@ function checkConnection(){
     requestCheck.catch(errorCheck)
 }
 
-function successCheck(response){
-    console.log(nameInput)
-}
+function successCheck(response){}
 
 function errorCheck(response){
-    window.location.reload()
-    nameInput = ""
-    console.log(nameInput)
-    console.log("deu ruim checkando conexao")
+    updateScreen()
 }
 
 function chooseStatus(status){
@@ -249,6 +242,8 @@ function chooseStatus(status){
     }
 }
 
+enterkey()
+function enterkey(){
 document.querySelector(".message").addEventListener("keypress",function(event){
     if (event.keyCode === 13){
         event.preventDefault();
@@ -256,4 +251,17 @@ document.querySelector(".message").addEventListener("keypress",function(event){
     }
 });
 
+document.querySelector(".name").addEventListener("keypress",function(event){
+    if (event.keyCode === 13){
+        event.preventDefault();
+        loggingChat()
+    }
+});
 
+}
+
+function updateScreen(){
+    window.location.reload()
+    
+    
+}

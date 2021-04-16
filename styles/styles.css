@@ -76,7 +76,7 @@ body {
     flex-direction: column;
 }
 
-#submit {
+.submit {
     background: #E7E7E7;
     width: 109px;
     height: 45px;
