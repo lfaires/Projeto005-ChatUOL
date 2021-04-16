@@ -101,6 +101,7 @@ function activeScreen(){
     const activeScreenBack = document.querySelector(".active-screen-back")
     activeParticipants.classList.add("unhide")
     activeScreenBack.classList.add("unhide")
+    messageToUser()
 }
 
 function closeActiveScreen(){
@@ -156,4 +157,34 @@ function automaticScrollDown(element){
 function enterKeyEnable(){
     const textInput = document.querySelector(".message")
     textInput.addEventListener()
+}
+
+function messageToUser(){
+   
+    const promiseUserActive = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants")
+  
+    promiseUserActive.then(successMessageToUser)
+    promiseUserActive.catch(errorMessageToUser)
+    
+}
+
+function successMessageToUser(promiseResponse){
+    const user = promiseResponse.data
+    console.log(user)
+    const sideBar = document.querySelector(".contacts")
+
+    for(let i=0;i<user.length;i++){
+            sideBar.innerHTML += `
+            <div class="activate-contacts">
+                <div>
+                    <div><ion-icon name="person-circle-sharp"></ion-icon></div>
+                    &nbsp;&nbsp;
+                    <div>${user[i].name}</div>
+                </div>
+            </div>`
+        }
+    }
+
+function errorMessageToUser(){
+    alert()
 }

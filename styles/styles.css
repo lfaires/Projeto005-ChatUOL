@@ -42,6 +42,7 @@ body {
     right: 0px;
     background: #FFF;
     z-index: 3;
+    overflow: scroll;
 }
 
 .active-screen ion-icon {
@@ -182,8 +183,9 @@ ion-icon {
     overflow: scroll;
 }
 
+
 .activate-contacts, .activate-visibility {
-    padding: 5px 15px;
+    padding: 5px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
