@@ -40,14 +40,12 @@ function successLogging(success){
 function errorLogging(errors){
     loading.innerHTML = ""
     if(errors === ""){
-        updateScreen()
         alert("Por favor, insira um nome!")
         return;
     }
     
     const errorNumber = errors.response.status;
     if(errorNumber === 400){
-        updateScreen()
         alert("Por favor, insira outro nome!")
         return;
     }
@@ -81,7 +79,7 @@ function successGetMessages(success){
 }
 
 function errorGetMessages(error){
-    updateScreen()
+    window.location.reload()
 
 }
 /*------------------------------------------*/
@@ -119,7 +117,7 @@ function successSendMesssages(success){
 }
 
 function errorSendMessages(error){
-    updateScreen()
+    window.location.reload()
 }
 /*------------------------------------------*/
 function automaticScrollDown(element){
@@ -195,7 +193,7 @@ function successMessageToUser(promiseResponse){
     }
 
 function errorMessageToUser(){
-    updateScreen()
+    window.location.reload()
 }
 
 /*------------------------------------------*/
@@ -224,7 +222,7 @@ function checkConnection(){
 function successCheck(response){}
 
 function errorCheck(response){
-    updateScreen()
+    window.location.reload()
 }
 
 function chooseStatus(status){
@@ -258,10 +256,4 @@ document.querySelector(".name").addEventListener("keypress",function(event){
     }
 });
 
-}
-
-function updateScreen(){
-    window.location.reload()
-    
-    
 }
