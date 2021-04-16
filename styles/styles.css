@@ -127,6 +127,7 @@ header {
     padding-left: 8px;
     padding-right: 9px;
     border-radius: 2px;
+    word-break: break-all;
 }
 
 .status {
@@ -186,14 +187,14 @@ ion-icon {
 }
 
 
-.activate-users, .activate-visibility {
+.activate-users, .status-public, .status-private {
     padding: 5px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.activate-users :first-child, .activate-visibility :first-child{
+.activate-users :first-child, .status-public :first-child, .status-private :first-child{
     display: flex;
     align-items: center;
 }

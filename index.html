@@ -30,27 +30,19 @@
         <button id="submit" onclick="loggingChat()">Entrar</button>
         <div class="loading"></div>
     </div>
+    
     <div class="active-screen-back hide" onclick="closeActiveScreen()"></div>
     <div class="active-screen hide">
        
         <div class="heading user">Escolha um contato <br> para enviar mensagem:</div>
         
         <div class="users">
-            <div class="activate-users" onclick="chooseUser('todos')">
-                <div>
-                    <div><ion-icon name="people-sharp"></ion-icon></div>
-                    &nbsp;&nbsp;
-                    <div>Todos</div>
-                </div>
-                <div class="todos check">
-                    <ion-icon name="checkmark-sharp"></ion-icon>
-                </div>
-            </div>
+            
         </div>   
        
         <div class="heading">Escolha a visibilidade:</div>
         
-        <div class="activate-visibility" onclick="chooseVisibility(this)">
+        <div class="status-public" onclick="chooseStatus('.public')">
             
             <div>
                 <div><ion-icon name="lock-open"></ion-icon></div>
@@ -64,7 +56,7 @@
             
         </div>
         
-        <div class="activate-visibility" onclick="chooseVisibility(this)">
+        <div class="status-private" onclick="chooseStatus('.private')">
            <div>
                <div><ion-icon name="lock-closed"></ion-icon></div> 
                 &nbsp;&nbsp;

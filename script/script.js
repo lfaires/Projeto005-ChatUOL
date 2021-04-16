@@ -1,6 +1,8 @@
 const messageSent = [];
 let names = [];
-const nameInput = document.querySelector(".name").value
+let nameInput = document.querySelector(".name").value
+let nameTo = "Todos"
+let messageStatus = "message"
 const loading = document.querySelector(".loading")
 
 /* Entra na sala */
@@ -33,6 +35,7 @@ function successLogging(success){
     getMessages()  
     setInterval(getMessages,3000)
     setInterval(checkConnection,5000)
+    setInterval(messageToUser,10000)
 }
 
 function errorLogging(errors){
@@ -62,10 +65,11 @@ function successGetMessages(success){
     container.innerHTML = ""
 
     for(let i=0;i<messages.length;i++){
+        let messe
         if(messages[i].type === "status"){
             container.innerHTML += `<li class="chat status"><span class="time">(${messages[i].time})&nbsp;</span> <strong>${messages[i].from}&nbsp;</strong> ${messages[i].text}</li>`
         }else if (messages[i].type === "private_message") {
-            if(messages[i].to === nameInput){
+            if(messages[i].to === nameInput || messages[i].from === nameInput){
             container.innerHTML += `<li class="chat private"><span class="time">(${messages[i].time})&nbsp;</span> <strong>${messages[i].from}&nbsp;</strong> reservadamente para <strong>&nbsp;${messages[i].to}:&nbsp;</strong> ${messages[i].text}</li>`}
         } else {
             container.innerHTML += `<li class="chat"><span class="time">(${messages[i].time})&nbsp;</span> <strong>${messages[i].from}&nbsp;</strong> para <strong>&nbsp;${messages[i].to}:&nbsp;</strong> ${messages[i].text}</li>`
@@ -88,6 +92,7 @@ function activeScreen(){
     activeParticipants.classList.add("unhide")
     activeScreenBack.classList.add("unhide")
     messageToUser()
+
 }
 
 function closeActiveScreen(){
@@ -101,7 +106,7 @@ function closeActiveScreen(){
 
 function sendMessages(){
     const messageInput = document.querySelector(".message").value;
-    const messageSent = {from: nameInput, to: "Todos", text: messageInput, type: "message"};
+    const messageSent = {from: nameInput, to: nameTo, text: messageInput, type: messageStatus};
     
     console.log(messageSent)
 
@@ -141,7 +146,6 @@ function automaticScrollDown(element){
 }
 
 function messageToUser(){
-   
     const promiseUserActive = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants")
   
     promiseUserActive.then(successMessageToUser)
@@ -153,19 +157,59 @@ function successMessageToUser(promiseResponse){
     const user = promiseResponse.data
     console.log(user)
     const sideBar = document.querySelector(".users")
-
+    const validationSideBar = document.querySelector(".check.user-todos.active")
+    console.log(validationSideBar)
+    if(validationSideBar === null){
+       sideBar.innerHTML =
+        `<div class="activate-users" onclick="chooseUser('user-todos')">
+            <div>
+                <div><ion-icon name="people-sharp"></ion-icon></div>
+                &nbsp;&nbsp;
+                <div>Todos</div>
+            </div>
+            <div class="check user-todos">
+                <ion-icon name="checkmark-sharp"></ion-icon>
+            </div>
+        </div>`
+    } else {
+        sideBar.innerHTML =
+        `<div class="activate-users" onclick="chooseUser('user-todos')">
+            <div>
+                <div><ion-icon name="people-sharp"></ion-icon></div>
+                &nbsp;&nbsp;
+                <div>Todos</div>
+            </div>
+            <div class="check user-todos active">
+                <ion-icon name="checkmark-sharp"></ion-icon>
+            </div>
+        </div>`
+    }
     for(let i=0;i<user.length;i++){
+        if(nameTo === user[i].name){
             sideBar.innerHTML += `
-            <div class="activate-users" onclick="chooseUser('${user[i].name}')">
+            <div class="activate-users" onclick="chooseUser('user-${user[i].name}')">
                 <div>
                     <div><ion-icon name="person-circle-sharp"></ion-icon></div>
                     &nbsp;&nbsp;
                     <div>${user[i].name}</div>
                 </div>
-                <div class="${user[i].name} check">
+                <div class="check user-${user[i].name} active">
                 <ion-icon name="checkmark-sharp"></ion-icon>
                 </div>
             </div>`
+          } else {
+            sideBar.innerHTML += `
+            <div class="activate-users" onclick="chooseUser('user-${user[i].name}')">
+                <div>
+                    <div><ion-icon name="person-circle-sharp"></ion-icon></div>
+                    &nbsp;&nbsp;
+                    <div>${user[i].name}</div>
+                </div>
+                <div class="check user-${user[i].name}">
+                <ion-icon name="checkmark-sharp"></ion-icon>
+                </div>
+            </div>`
+          }
         }
     }
 
@@ -174,18 +218,19 @@ function errorMessageToUser(){
 }
 
 
-/*function chooseUser(user){
-    const userName = user;
-    console.log(userName)
-    const check = document.querySelector("." + userName + ".check")
-    const checkActive = document.querySelector(".check .active")
-    
+function chooseUser(user){
+    const check = document.querySelector(".check." + user)
+    const checkActive = document.querySelector(".active")
+    console.log(check)
+    console.log(checkActive)
     if(checkActive !== null) {
         checkActive.classList.remove("active");
     } 
 
     check.classList.add("active")
-}*/
+    nameTo = user.replace("user-","")
+    console.log(nameTo)
+}
 
 
 /* MANTER CONEXÃO*/
@@ -208,3 +253,22 @@ function errorCheck(response){
     console.log("deu ruim checkando conexao")
 }
 
+
+function chooseStatus(status){
+    const publicStatus = document.querySelector(".status-public .check")
+    const privateStatus = document.querySelector(".status-private .check")
+    
+    if(status === ".private"){
+        messageStatus = "private_message"
+        publicStatus.classList.remove("active")
+        privateStatus.classList.add("active")
+    } else {
+        messageStatus = "message"
+        privateStatus.classList.remove("active")
+        publicStatus.classList.add("active")
+    }
+}
+
+function enterKey(){
+
+}
