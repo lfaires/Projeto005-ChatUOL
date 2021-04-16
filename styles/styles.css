@@ -179,22 +179,28 @@ ion-icon {
     font-size: 35px;
 }
 
-.contacts {
+.users {
     overflow: scroll;
 }
 
 
-.activate-contacts, .activate-visibility {
+.activate-users, .activate-visibility {
     padding: 5px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.activate-contacts :first-child, .activate-visibility :first-child{
+.activate-users :first-child, .activate-visibility :first-child{
     display: flex;
     align-items: center;
 }
 
+.check {
+    opacity: 0;
+}
 
-
+.check.active {
+    opacity: 1;
+    color: #28BB25;
+}

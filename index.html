@@ -33,14 +33,17 @@
     <div class="active-screen-back hide" onclick="closeActiveScreen()"></div>
     <div class="active-screen hide">
        
-        <div class="heading contact">Escolha um contato <br> para enviar mensagem:</div>
+        <div class="heading user">Escolha um contato <br> para enviar mensagem:</div>
         
-        <div class="contacts">
-            <div class="activate-contacts">
+        <div class="users">
+            <div class="activate-users" onclick="chooseUser('todos')">
                 <div>
                     <div><ion-icon name="people-sharp"></ion-icon></div>
                     &nbsp;&nbsp;
                     <div>Todos</div>
+                </div>
+                <div class="todos check">
+                    <ion-icon name="checkmark-sharp"></ion-icon>
                 </div>
             </div>
         </div>   
@@ -55,8 +58,8 @@
                 <div>Público</div>
             </div>
 
-            <div>
-                <ion-icon class="activate-check" name="checkmark-sharp"></ion-icon>
+            <div class="check">
+                <ion-icon name="checkmark-sharp"></ion-icon>
             </div>
             
         </div>
@@ -68,8 +71,8 @@
                 <div>Reservadamente</div>
             </div>
 
-            <div>
-                 <ion-icon class="activate-check" name="checkmark-sharp"></ion-icon>
+            <div class="check">
+                 <ion-icon name="checkmark-sharp"></ion-icon>
              </div>
          </div>
 

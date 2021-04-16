@@ -2,8 +2,10 @@ const messageSent = [];
 let names = [];
 const nameInput = document.querySelector(".name").value
 
+
 /* Entra na sala */
 function loggingChat() {
+    console.log(nameInput)
     if(nameInput === ""){
         errorLogging("")
         return;   
@@ -12,9 +14,11 @@ function loggingChat() {
     const loading = document.querySelector(".loading")
     loading.innerHTML = `<img src="img/loading.gif" alt=""><span>Carregando...</span>`
     
+   confirmingUser()
+}
+
+function confirmingUser(){
     const name = {name: nameInput};
-    names.push(name)
-    
     const requestName = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants",name)
    
     requestName.then(successLogging)
@@ -22,11 +26,12 @@ function loggingChat() {
 
 }
 
+
 function successLogging(success){
     const initialScreen = document.querySelector(".initial-screen")
     initialScreen.classList.add("hide")  
     searchingMessages()
-    /*checkConnection(nameInput)*/
+    setInterval(checkConnection,5000)
 }
 
 function errorLogging(errors){
@@ -40,30 +45,7 @@ function errorLogging(errors){
         alert("Por favor, insira outro nome!")
         return;
     }
-    /*const sdjk = document.querySelector(".error")
-    sdjk.innerHTML = `<img src="https://http.cat/${errorNumber}.jpg" alt=""></img>`*/
 }
-
-/*----------------------------------------------------------------*/
-
-/*checka conexão*/
-/*function checkConnection(name){
-    const requestConnection = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/status",name)
-
-    connection.then(successCheckConnection)
-    connection.catch(errorCheckConnection)
-}
-
-function successCheckConnection(){
-    const idInterval = setInterval()
-}
-
-function errorCheckConnection(){
-
-}*/
-
-
-
 
 /* busca mensagens*/
 function searchingMessages(){
@@ -113,10 +95,9 @@ function closeActiveScreen(){
 
 /*enviar mensagem*/
 
-function sendingMessages(name){
+function sendingMessages(){
     const messageInput = document.querySelector(".message").value;
-   
-    const messageSent = {from: nameInput, to:"Todos", text: messageInput, type: "message"};
+    const messageSent = {from: nameInput, to: "Todos", text: messageInput, type: "message"};
     
     console.log(messageSent)
 
@@ -133,6 +114,7 @@ function successSendingMesssages(success){
 }
 
 function errorSendingMessages(error){
+    location.reload()
 }
 
 
@@ -171,15 +153,18 @@ function messageToUser(){
 function successMessageToUser(promiseResponse){
     const user = promiseResponse.data
     console.log(user)
-    const sideBar = document.querySelector(".contacts")
+    const sideBar = document.querySelector(".users")
 
     for(let i=0;i<user.length;i++){
             sideBar.innerHTML += `
-            <div class="activate-contacts">
+            <div class="activate-users" onclick="chooseUser('${user[i].name}')">
                 <div>
                     <div><ion-icon name="person-circle-sharp"></ion-icon></div>
                     &nbsp;&nbsp;
                     <div>${user[i].name}</div>
+                </div>
+                <div class="${user[i].name} check">
+                <ion-icon name="checkmark-sharp"></ion-icon>
                 </div>
             </div>`
         }
@@ -187,4 +172,37 @@ function successMessageToUser(promiseResponse){
 
 function errorMessageToUser(){
     alert()
+}
+
+
+function chooseUser(user){
+    const userName = user;
+    console.log(userName)
+    const check = document.querySelector("." + userName + ".check")
+    const checkActive = document.querySelector(".check .active")
+    
+    if(checkActive !== null) {
+        checkActive.classList.remove("active");
+    } 
+
+    check.classList.add("active")
+}
+
+
+/* MANTER CONEXÃO*/
+function checkConnection(){
+    const name = {name: nameInput};
+    const requestCheck = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/status",name)
+
+    requestCheck.then(successCheck)
+    requestCheck.catch(errorCheck)
+}
+
+function successCheck(response){
+    console.log(nameInput)
+}
+
+function errorCheck(response){
+    location.load()
+    nameInput = ""
 }
