@@ -17,38 +17,65 @@
     </header>
 
     <ul class="container">
-        <li class="chat"></li>
-        <li></li>
-        <li></li>
     </ul>
 
     <footer>
-        <input class="message" type="text" placeholder="Escreva aqui">
-        <ion-icon name="paper-plane-outline" onclick="sendingMessages(loggingChat())"></ion-icon>
+        <input class="message" type="text" placeholder="Escreva aqui...">
+        <ion-icon name="paper-plane-outline" onclick="sendingMessages()"></ion-icon>
     </footer>
 
     <div class="initial-screen">
         <img src="img/logo_uol2.png" alt="Logo UOL">
         <input class="name" type="text" placeholder="Digite seu nome">
         <button id="submit" onclick="loggingChat()">Entrar</button>
-        <div class="error"></div>
+        <div class="loading"></div>
     </div>
     <div class="active-screen-back hide" onclick="closeActiveScreen()"></div>
     <div class="active-screen hide">
        
         <div class="heading contact">Escolha um contato <br> para enviar mensagem:</div>
-        <div>
-            <p>Todos</p>
-            <p>João</p>
-            <p>Maria</p>
-        </div>
+        
+        <div class="contacts">
+            <div class="activate-contacts">
+                <div>
+                    <div><ion-icon name="people-sharp"></ion-icon></div>
+                    &nbsp;&nbsp;
+                    <div>Todos</div>
+                </div>
+
+                <div>
+                    <ion-icon class="activate-check" name="checkmark-sharp"></ion-icon>
+                </div>
+            </div>
+        
         <div class="heading visibility">Escolha a visibilidade:</div>
-        <div id="public" onclick="chooseVisibility(this)">
-            <div><ion-icon name="lock-open"></ion-icon><span>Público</span></div>           
+       
+        <div class="activate-visibility" onclick="chooseVisibility(this)">
+           
+            <div>
+                <div><ion-icon name="lock-open"></ion-icon></div>
+                &nbsp;&nbsp; 
+                <div>Público</div>
+            </div>
+
+            <div>
+                <ion-icon class="activate-check" name="checkmark-sharp"></ion-icon>
+            </div>
+           
         </div>
-        <div id="private" onclick="chooseVisibility(this)">
-            <div><ion-icon name="lock-closed"></ion-icon><span>Reservadamente</span></div>            
+       
+        <div class="activate-visibility" onclick="chooseVisibility(this)">
+            <div>
+                <div><ion-icon name="lock-closed"></ion-icon></div> 
+                &nbsp;&nbsp;
+                <div>Reservadamente</div>
+            </div>
+
+            <div>
+                <ion-icon class="activate-check" name="checkmark-sharp"></ion-icon>
+            </div>
         </div>
+       
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script/script.js"></script>

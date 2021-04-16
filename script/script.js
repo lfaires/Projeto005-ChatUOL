@@ -1,15 +1,16 @@
 const messageSent = [];
 let names = [];
-
+const nameInput = document.querySelector(".name").value
 
 /* Entra na sala */
 function loggingChat() {
-    const nameInput = document.querySelector(".name").value
-   
     if(nameInput === ""){
         errorLogging("")
         return;   
     }
+
+    const loading = document.querySelector(".loading")
+    loading.innerHTML = `<img src="img/loading.gif" alt=""><span>Carregando...</span>`
     
     const name = {name: nameInput};
     names.push(name)
@@ -18,14 +19,14 @@ function loggingChat() {
    
     requestName.then(successLogging)
     requestName.catch(errorLogging)
-    
-    return nameInput;
+
 }
 
 function successLogging(success){
     const initialScreen = document.querySelector(".initial-screen")
     initialScreen.classList.add("hide")  
     searchingMessages()
+    /*checkConnection(nameInput)*/
 }
 
 function errorLogging(errors){
@@ -47,11 +48,22 @@ function errorLogging(errors){
 
 /*checka conexão*/
 /*function checkConnection(name){
-    const connection = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/status",name)
+    const requestConnection = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/status",name)
 
-    connection.then()
-    connection.catch()
+    connection.then(successCheckConnection)
+    connection.catch(errorCheckConnection)
+}
+
+function successCheckConnection(){
+    const idInterval = setInterval()
+}
+
+function errorCheckConnection(){
+
 }*/
+
+
+
 
 /* busca mensagens*/
 function searchingMessages(){
@@ -70,11 +82,12 @@ function successSearchingMessages(promiseResponse){
         if(messages[i].type === "status"){
             container.innerHTML += `<li class="chat status"><span class="time">(${messages[i].time})&nbsp;</span> <strong>${messages[i].from}&nbsp;</strong> ${messages[i].text}</li>`
         }else if (messages[i].type === "private_message") {
-            container.innerHTML += `<li class="chat private"><span class="time">(${messages[i].time})&nbsp;</span> <strong>${messages[i].from}&nbsp;</strong> reservadamente para <strong>&nbsp;${messages[i].to}</strong>: ${messages[i].text}</li>`
+            container.innerHTML += `<li class="chat private"><span class="time">(${messages[i].time})&nbsp;</span> <strong>${messages[i].from}&nbsp;</strong> reservadamente para <strong>&nbsp;${messages[i].to}:&nbsp;</strong> ${messages[i].text}</li>`
         } else {
-            container.innerHTML += `<li class="chat"><span class="time">(${messages[i].time})&nbsp;</span> <strong>${messages[i].from}&nbsp;</strong> para <strong>&nbsp;${messages[i].to}</strong>: ${messages[i].text}</li>`
+            container.innerHTML += `<li class="chat"><span class="time">(${messages[i].time})&nbsp;</span> <strong>${messages[i].from}&nbsp;</strong> para <strong>&nbsp;${messages[i].to}:&nbsp;</strong> ${messages[i].text}</li>`
         }
     }
+    automaticScrollDown(container)
 }
 
 function errorSearchingMessages(promiseResponse){
@@ -102,7 +115,7 @@ function closeActiveScreen(){
 function sendingMessages(name){
     const messageInput = document.querySelector(".message").value;
    
-    const messageSent = {from: name, to:"Todos", text: messageInput, type: "message"};
+    const messageSent = {from: nameInput, to:"Todos", text: messageInput, type: "message"};
     
     console.log(messageSent)
 
@@ -113,14 +126,12 @@ function sendingMessages(name){
 }   
 
 function successSendingMesssages(success){
-    console.log(success.response.status)
     searchingMessages()
+    console.log(success)
+    
 }
 
 function errorSendingMessages(error){
-    console.log(error.response.status)
-    alert(error.response.status)
-    searchingMessages()
 }
 
 
@@ -133,4 +144,16 @@ function addMessageScreen(text){
     container.innerHTML += li
     document.querySelector(".message").value = ""
     }
+}
+
+function automaticScrollDown(element){
+    const scrollContainer = element.lastChild;
+    console.log(scrollContainer)
+    scrollContainer.scrollIntoView()
+
+}
+
+function enterKeyEnable(){
+    const textInput = document.querySelector(".message")
+    textInput.addEventListener()
 }
