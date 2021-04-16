@@ -14,7 +14,6 @@ function loggingChat() {
     }
 
     loading.innerHTML = `<img src="img/loading.gif" alt=""><span>Carregando...</span>`
-    
     confirmingUser()
 }
 
@@ -39,13 +38,17 @@ function successLogging(success){
 }
 
 function errorLogging(errors){
+    loading.innerHTML = ""
+    nameInput = ""
     if(errors === ""){
+        window.location.reload()
         alert("Por favor, insira um nome!")
         return;
     }
     
     const errorNumber = errors.response.status;
     if(errorNumber === 400){
+        window.location.reload()
         alert("Por favor, insira outro nome!")
         return;
     }
@@ -84,7 +87,6 @@ function errorGetMessages(error){
     console.log("deu ruim pegando msg a cada 3s trank")
 }
 
-
 /* contatos ativos*/
 function activeScreen(){
     const activeParticipants = document.querySelector(".active-screen")
@@ -103,7 +105,6 @@ function closeActiveScreen(){
 }
 
 /*ENVIAR MENSAGEM*/
-
 function sendMessages(){
     const messageInput = document.querySelector(".message").value;
     const messageSent = {from: nameInput, to: nameTo, text: messageInput, type: messageStatus};
@@ -118,31 +119,16 @@ function sendMessages(){
 
 function successSendMesssages(success){
     getMessages()
-    console.log(success)
-    
 }
 
 function errorSendMessages(error){
-    location.reload()
-}
-
-
-function addMessageScreen(text){
-    const container = document.querySelector(".container")
-    container.innerHTML = ""
-
-    for (i=0;i<messageSent.length;i++){
-    const li = `<li class="chat">${messageSent[i].message}</li>`
-    container.innerHTML += li
-    document.querySelector(".message").value = ""
-    }
+    widnow.location.reload()
 }
 
 function automaticScrollDown(element){
     const scrollContainer = element.lastChild;
     console.log(scrollContainer)
     scrollContainer.scrollIntoView()
-
 }
 
 function messageToUser(){
@@ -150,7 +136,6 @@ function messageToUser(){
   
     promiseUserActive.then(successMessageToUser)
     promiseUserActive.catch(errorMessageToUser)
-    
 }
 
 function successMessageToUser(promiseResponse){
@@ -214,24 +199,20 @@ function successMessageToUser(promiseResponse){
     }
 
 function errorMessageToUser(){
-    alert()
+    window.location.reload()
 }
-
 
 function chooseUser(user){
     const check = document.querySelector(".check." + user)
     const checkActive = document.querySelector(".active")
-    console.log(check)
-    console.log(checkActive)
+
     if(checkActive !== null) {
         checkActive.classList.remove("active");
     } 
 
     check.classList.add("active")
     nameTo = user.replace("user-","")
-    console.log(nameTo)
 }
-
 
 /* MANTER CONEXÃO*/
 function checkConnection(){
@@ -247,12 +228,11 @@ function successCheck(response){
 }
 
 function errorCheck(response){
-    location.load()
+    window.location.reload()
     nameInput = ""
     console.log(nameInput)
     console.log("deu ruim checkando conexao")
 }
-
 
 function chooseStatus(status){
     const publicStatus = document.querySelector(".status-public .check")
@@ -269,6 +249,11 @@ function chooseStatus(status){
     }
 }
 
-function enterKey(){
+document.querySelector(".message").addEventListener("keypress",function(event){
+    if (event.keyCode === 13){
+        event.preventDefault();
+        sendMessages();
+    }
+});
 
-}
+
